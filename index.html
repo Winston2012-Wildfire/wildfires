@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>When The Sky Turned Orange</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="site-grid"></div>
+  <div class="progress" id="progress"></div>
+
+  <aside id="drawer" class="drawer" aria-hidden="true">
+    <button id="closeDrawer" class="drawer-close" aria-label="Close menu">×</button>
+    <nav class="drawer-links">
+      <a href="#home">Home</a>
+      <a href="#introduction">Introduction</a>
+      <a href="#monitor">Map</a>
+      <a href="#causes">Causes</a>
+      <a href="#good-fire">Good Fire</a>
+      <a href="#impacts">Impacts</a>
+      <a href="#regeneration">Regeneration</a>
+      <a href="#what-can-we-do">What Can We Do</a>
+      <a href="#safety">Safety</a>
+      <a href="#book">Book</a>
+      <a href="#sources">Sources</a>
+    </nav>
+  </aside>
+  <div id="drawerShade" class="drawer-shade"></div>
+
+  <header class="topbar">
+    <button id="openDrawer" class="menu-button" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <a class="brand" href="#home">When The Sky Turned Orange</a>
+    <nav class="topnav">
+      <a href="#introduction">Introduction</a>
+      <a href="#monitor">Map</a>
+      <a href="#good-fire">Good Fire</a>
+      <a href="#safety">Safety</a>
+      <a href="#book">Book</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="hero-bg parallax" data-speed="0.16"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-inner reveal">
+        <p class="eyebrow">A VISUAL ARTICLE ABOUT WILDFIRES</p>
+        <h1>When The Sky<br />Turned Orange</h1>
+        <div class="hero-actions">
+          <a href="#introduction">Read</a>
+          <a href="#monitor">Open Map</a>
+        </div>
+      </div>
+      <div class="hero-time reveal" id="dateStamp">Loading Pacific Time...</div>
+    </section>
+
+    <section id="introduction" class="section article-section reveal-block">
+      <div class="section-head reveal">
+        <p class="eyebrow">INTRODUCTION</p>
+        <h2>Introduction</h2>
+        <p class="byline">By Winston Huang</p>
+      </div>
+      <div class="article-layout">
+        <article class="article-column reveal">
+          <div class="article-text content-block"><p>I remember waking up to the smell of burning wood. The news was on, saying that the night before, lightning struck the Santa Cruz Mountains, causing a big wildfire. At first, I didn’t understand how serious it was. The fire felt far away, like just something you normally see on the news, not something that would find its way into your life.</p>
+<p>But when I looked out my window, it felt different, and the whole neighborhood felt wrong. The air looked orange, and when I walked out, the air felt heavy and hot. The smoke burned my throat since it had found its way into our house because we had left a window open. That was when I realized how wildfires weren’t just burning a few trees but changing entire ecosystems and affecting people’s lives.</p>
+<p>They could change the sky, the air, and the way people felt in their own homes. After what became known as the 2020 CZU fires, I became fascinated by wildfires. This website explores how fires start, how they spread, how they affect people and animals, and how people can prepare before a wildfire. It also introduces my upcoming book, When the Sky Turned Orange.</p></div>
+        </article>
+        <aside class="article-image reveal">
+          <img src="assets/bridge-fire.jpg" alt="Wildfire landscape" />
+        </aside>
+      </div>
+    </section>
+
+
+
+
+    <section id="monitor" class="section monitor-section reveal-block">
+      <div class="section-head reveal">
+        <p class="eyebrow">MAP</p>
+        <h2>Fire Map</h2>
+      </div>
+
+      <div class="map-top reveal">
+        <div id="dateStampLarge" class="map-time">Loading...</div>
+        <div class="map-actions">
+          <button id="zoomIn" type="button">+</button>
+          <button id="zoomOut" type="button">−</button>
+          <button id="resetMap" type="button">Reset</button>
+          <button id="refreshFireData" type="button">Refresh</button>
+          <button id="nearMe" type="button">Fires Near Me</button>
+        </div>
+      </div>
+
+      <div class="filters reveal">
+        <button class="filter active" data-region="global">Global</button>
+        <button class="filter" data-region="canada">Canada</button>
+        <button class="filter" data-region="us">U.S.</button>
+        <button class="filter" data-region="california">California</button>
+      </div>
+
+      <div class="map-layout reveal">
+        <div class="map-panel" id="mapPanel">
+          <div id="fireMap" class="leaflet-map" aria-label="Interactive wildfire map"></div>
+          <div class="legend">
+            <div><i class="low"></i><span>Low</span></div>
+            <div><i class="mid"></i><span>Medium</span></div>
+            <div><i class="high"></i><span>High</span></div>
+          </div>
+        </div>
+
+        <aside class="stats-panel">
+          <div class="stat-row"><span>Wildfires</span><strong id="incidentNumber">—</strong></div>
+          <div class="stat-row"><span>Acres Burned</span><strong id="acreNumber">—</strong></div>
+          <div class="stat-row"><span>Deaths</span><strong id="deathNumber">—</strong></div>
+        </aside>
+      </div>
+    </section>
+
+
+
+
+    <section id="causes" class="section split-section reveal-block">
+      <div class="section-head reveal">
+        <p class="eyebrow">CAUSES</p>
+        <h2>Why Wildfires Start</h2>
+      </div>
+      <div class="split-grid">
+        <div class="image-tile reveal"><img src="assets/forest-river.jpg" alt="Forest" /></div>
+        <div class="writing-stack reveal">
+          <div class="article-text content-block"><p>Fire needs three elements to burn. These are heat, a fuel source, and oxygen. Together, these make up the fire triangle. Water removes the heat, sand blocks oxygen, and controlled burns reduce fuel sources.</p>
+<p>Most fires begin with a small spark, but they become dangerous only because of dry fuel, heat, wind, and human activity. A few very common ways that humans cause wildfires are by not disposing of cigarettes properly, using fireworks, sparks from power lines, and leaving campfires unattended. However, some wildfires start naturally from lightning strikes.</p>
+<p>Once a fire starts, wind can push it forward quickly, with some fires reaching speeds of up to 14 mph (22 kph). This is why wildfires are not caused by one thing alone. They happen when the parts of the fire triangle meet dangerous conditions.</p></div>
+          <div class="image-band"><img src="assets/green-hills.jpg" alt="Green hills" /></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="good-fire" class="section good-fire-section reveal-block">
+      <div class="section-head reveal">
+        <p class="eyebrow">GOOD FIRE</p>
+        <h2>Controlled Burns</h2>
+      </div>
+      <div class="two-column goodfire-preview-grid">
+        <div class="image-tile reveal"><img src="assets/controlled-burn-worker.jpg" alt="Professional controlled burn" /></div>
+        <div class="article-text content-block reveal">
+          <p>Not every fire is bad. Many fires can actually benefit plants, animals, and the environment.</p>
+          <p>Controlled burns are intentionally ignited, low-intensity fires carefully managed by professionals. If you remember, one of the elements of a fire is fuel. Controlled burns light dry leaves, grass, branches, and other dead plant material, burning them into ash. This way, if a wildfire comes later, there is less fuel for it to burn, which can slow it down and make it less intense.</p>
+          <p>Controlled burns can return essential nutrients to the soil and help certain plants germinate. They are used to help control invasive species, manage pests, and create diverse habitats for wildlife.</p>
+          <p>Controlled burns are not random. They require strict, scientific “burn plans,” overseen by certified burn bosses and trained crews.</p>
+          <p>Never attempt a controlled burn yourself, because even a small fire can become dangerous if it is not managed correctly. Good fire is not about letting fire destroy. It is about using fire carefully so forests can become healthier and safer.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="impacts" class="section impact-section reveal-block">
+      <div class="section-head reveal">
+        <p class="eyebrow">IMPACTS</p>
+        <h2>Wildfires Affect More Than The Burned Area</h2>
+      </div>
+      <div class="impact-grid">
+        <div class="impact-image reveal"><img src="assets/impact-portrait-new.jpg" alt="Misty forest" /></div>
+        <div class="impact-writing reveal">
+          <div class="article-text content-block"><p>When people think of wildfires, they usually picture trees and homes burning. But that is only the tip of the iceberg. They affect the air, animals, homes, water, soil, and people who may live far from the fire.</p>
+<p>Smoke can rise into the stratosphere and spread for hundreds or even thousands of miles. This can trigger respiratory issues and cardiovascular strain. Smoke can block out the sunlight and bring fine particulate matter into the bloodstream and lungs.</p>
+<p>Animals can suffer from smoke inhalation, burns, and displacement. Many animals that survive the fire may later die from starvation and malnutrition. Their habitats may be damaged or gone, and they may have nowhere to hide from predators.</p>
+<p>People’s homes can burn, and many people may not have enough insurance, meaning they may have nowhere to live. Often, even those with insurance find it incredibly hard to find a new place and leave everything behind. Their memories, belongings, and sense of safety can disappear into ash.</p>
+<p>This is why the burned area on a map does not show the full damage. A wildfire can spread through smoke, fear, health problems, and recovery long after the flames are gone.</p></div>
+          <img class="impact-under-photo reveal" src="assets/impact-deer-afterfire.jpg" alt="Deer standing in a burned neighborhood after a wildfire" />
+
+        </div>
+      </div>
+    </section>
+
+
+    <section id="safety" class="section safety-section reveal-block">
+      <div class="section-head reveal">
+        <p class="eyebrow safety-eyebrow">SAFETY</p>
+        <h2>Prepare Before. Act Fast During. Recover After.</h2>
+        <p class="click-note">Click each card below to open the full safety page.</p>
+      </div>
+      <div class="safety-grid clickable-safety-grid">
+        <a class="safety-item safety-card-link reveal" href="prepare.html">
+          <img src="assets/safety-prepare-bag.jpg" alt="Emergency go-bag" />
+          <h3>Prepare Before</h3>
+          <span>Click to open</span>
+        </a>
+        <a class="safety-item safety-card-link reveal" href="during.html">
+          <img src="assets/during-house-fire.jpg" alt="House fire emergency" />
+          <h3>Act Fast During</h3>
+          <span>Click to open</span>
+        </a>
+        <a class="safety-item safety-card-link reveal" href="after.html">
+          <img src="assets/safety-recover-shelter.webp" alt="Emergency shelter" />
+          <h3>Recover After</h3>
+          <span>Click to open</span>
+        </a>
+      </div>
+      <div class="safety-links reveal">
+        <a href="gobag.html">Open Go-Bag Checklist</a>
+      </div>
+    </section>
+
+
+    <section id="regeneration" class="section regeneration-section reveal-block">
+      <div class="section-head reveal">
+        <p class="eyebrow">AFTERMATH</p>
+        <h2>Regeneration</h2>
+      </div>
+      <div class="two-column">
+        <div class="image-tile reveal"><img src="assets/regeneration-seedling.jpeg" alt="Regrowth after fire" /></div>
+        <div class="article-text content-block reveal"><p>When a fire stops, it leaves behind a vast, empty field of ash. Wind carries hardy microorganisms, fungi, and seeds into the burn scar. Eventually, fast-germinating wildflowers and small plants begin to sprout in the unshaded sunlight. As the soil improves, tough native grasses take over. Hardwood trees and shrubs sprout directly from the underground root systems that survived the heat. Fast-growing, sun-loving pioneer trees and dense scrub form a thick canopy. Over time, pioneer trees mature and create shade and rich soil. Ultimately, more and more plants are replacing the old forest, making the land feel alive again.</p>
+<p>Even though fires are often seen as only destructive, they can also have benefits in many ecosystems. For example, serotinous trees such as giant sequoias, lodgepole pines, jack pines, some eucalyptus trees, and other fire-adapted trees need fire to help open their cones. Heat melts the resin that seals the cones. Once the scales open, thousands of seeds scatter across the forest floor, creating a new generation of trees. Wildfires also help clear dead matter into ash, releasing nutrients such as calcium and potassium back into the soil.</p>
+<p>Just like the water cycle, wildfire can be a natural part of life in some ecosystems.</p></div>
+      </div>
+    </section>
+
+    <section id="what-can-we-do" class="section action-section reveal-block">
+      <div class="section-head reveal">
+        <p class="eyebrow">ACTION</p>
+        <h2>What Can We Do?</h2>
+      </div>
+      <div class="two-column reverse">
+        <div class="writing-area tall reveal text-filled no-lines"><p>Most wildfires do not begin as giant walls of flame. They begin small — a spark from a campfire, a cigarette, a power line, fireworks, or dry grass touching something hot. Since about 85% of wildfires are started by humans, prevention matters. If people are careful before a fire starts, they can stop one small spark from becoming a disaster. So, what can we do?</p><p>First, be careful with fire outdoors. Campfires should always be fully put out with water, stirred, and checked until they are cold. Never leave flames unattended, even if they seem safe.</p><p>Next, avoid sparks in dry grass. Do not use fireworks, burn trash, or drive or park on dry grass during hot and windy days. Even a small spark can spread quickly in dry conditions.</p><p>Also, keep yards safer. Clear dry leaves, dead grass, and branches. Clean gutters, and move wood piles or other flammable objects away from houses.</p><p>In addition, communities and utility companies can help prevent fires by trimming trees near power lines, inspecting equipment, and shutting off power during extreme wind or fire danger when needed. People should also speak up if they see a downed power line, a small fire, or anything that could become a fire hazard.</p><p>Finally, spread the word. Many wildfires are caused by human mistakes, so signs, school lessons, alerts, and community rules can help people make safer choices.</p><p>Wildfire prevention is not only about stopping nature. It is about stopping the sparks we can control. A single careful choice, such as putting out a campfire, clearing dry brush, or avoiding fireworks on a windy day, can protect forests, homes, animals, and lives. Fires may spread quickly, but prevention starts before the first flame.</p></div>
+        <div class="image-tile reveal"><img src="assets/what-can-we-do-campfire.jpg" alt="Campfire by a lake" /></div>
+      </div>
+    </section>
+
+    <section id="book" class="section book-section reveal-block">
+      <div class="section-head reveal">
+        <p class="eyebrow">COMING SOON</p>
+        <h2>When The Sky Turned Orange</h2>
+        <p class="book-by">By Winston Huang</p>
+        <p class="book-subtitle">A Novel Based Off Of The 2017 British Columbia Fires Of Canada</p>
+      </div>
+
+      <div class="book-grid book-grid-inline">
+        <div class="book-link reveal" aria-label="Dotted book cover">
+          <div class="book-outline">
+            <div class="book-spine"></div>
+            <div class="book-question">?</div>
+            <div class="book-lines"><span></span><span></span><span></span><span></span></div>
+          </div>
+        </div>
+
+        <div class="book-blurb reveal">
+          <h3>Blurb</h3>
+          <p class="book-blurb-copy">When a fast-moving wildfire races toward Williams Lake, Ethan escapes with only a go-bag and his bike. Separated from his family, he must rely on survival lessons he barely remembers from a school assembly. His escape takes a dangerous turn when he finds Rosalie, a younger girl who is injured, alone, and unable to escape. With no one else to rely on, they must survive impossible odds as the fire closes in around them. Will they make it out alive?</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="sources" class="section sources-section reveal-block final-section">
+      <div class="section-head reveal">
+        <p class="eyebrow">SOURCES</p>
+        <h2>Sources</h2>
+      </div>
+      <div class="sources-list reveal compact-sources">
+        <a class="source-button" href="https://cnr.ncsu.edu/news/2025/02/how-do-wildfires-impact-the-environment/" >NC State</a>
+        <a class="source-button" href="https://ciffc.net/" >CIFFC</a>
+        <a class="source-button" href="https://wildlife.ca.gov/Science-Institute/Wildfire-Impacts" >California Wildlife</a>
+        <a class="source-button" href="https://science.nasa.gov/earth/explore/wildfires-and-climate-change/" >NASA</a>
+        <a class="source-button" href="https://www.nifc.gov/fire-information/nfn" >NIFC</a>
+        <a class="source-button" href="https://www.nps.gov/articles/wildfire-causes-and-evaluation.htm" >NPS</a>
+        <a class="source-button" href="https://www.cdc.gov/wildfires/safety/index.html" >CDC</a>
+        <a class="source-button" href="https://www.redcross.org/get-help/how-to-prepare-for-emergencies/types-of-emergencies/fire.html" >Red Cross</a>
+        <a class="source-button" href="https://firms.modaps.eosdis.nasa.gov/" >NASA FIRMS</a>
+        <a class="source-button" href="https://www.fire.ca.gov/incidents" >CAL FIRE</a>
+      </div>
+      <div class="footer-row reveal">
+        <a href="mailto:winstonh2020@gmail.com">winstonh2020@gmail.com</a>
+      </div>
+    </section>
+  </main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="script.js"></script>
+</body>
+</html>
